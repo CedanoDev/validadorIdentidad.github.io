@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Validador de Número</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h2>Validador de documentos</h2>
+  <input type="text" id="numberInput" placeholder="Ingrese un número">
+  <button onclick="validateNumber()">Validar</button>
+  <p id="result"></p>
+
+  <script>
+    function validateNumber() {
+      let number = document.getElementById('numberInput').value;
+  if (number === null || number === "") {
+    console.log("Se ingresó un valor nulo!");
+    return;
+  }
+
+  if (isNaN(number)) {
+    console.log("No es un número");
+    return;
+  }
+
+  let length = number.length;
+  let factor = 2;
+  let total = 0;
+
+  while (length > 0) {
+    length--;
+    let digit = number.charAt(length);
+    let num = parseInt(digit);
+    let mult = num * factor;
+
+    if (mult < 10) {
+      total += mult;
+    } else {
+      let sub = mult.toString();
+      let num1 = sub.charAt(0);
+      let num2 = sub.charAt(1);
+      total += parseInt(num1) + parseInt(num2);
+    }
+
+    if (factor === 2) {
+      factor = 1;
+    } else {
+      factor = 2;
+    }
+  }
+
+  let modulo = total % 10;
+  let validator = 10 - modulo;
+
+  document.getElementById('result').textContent = "El dígito validador es: " + validator;
+
+}
+
+    </script>
+</body>
+</html>
